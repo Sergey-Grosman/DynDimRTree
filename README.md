@@ -1,4 +1,4 @@
-# C++ R-Tree with runtime Dimensionality 
+# C++ R-Tree with a runtime dimensionality 
 The project is forked from another github project
 https://github.com/nushoin/RTree, which itself is a further development of this R-Tree implementation: http://superliminal.com/sources/sources.htm.
 
