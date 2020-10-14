@@ -51,8 +51,8 @@ bool MySearchCallback(ValueType id)
 
 int main()
 {
-  typedef RTree<ValueType, int, 2, float> MyTree;
-  MyTree tree;
+  typedef DynDimRTree::RTree<ValueType, int, float> MyTree;
+  MyTree tree(2);
 
   int i, nhits;
   cout << "nrects = " << nrects << "\n";

@@ -1,10 +1,15 @@
-# R-Trees: A Dynamic Index Structure for Spatial Searching
+# C++ R-Tree with Dynamic Dimensionality 
+The project is forked from another github project
+https://github.com/nushoin/RTree, which itself is a further development of this R-Tree implementation: http://superliminal.com/sources/sources.htm.
 
-## Description
+The aim of this project is to allow the dimension to be specified at runtime and not as a template parameter at compile time.
 
-A C++ templated version of [this](http://www.superliminal.com/sources/sources.htm)
-RTree algorithm.
-The code it now generally compatible with the STL and Boost C++ libraries.
+I tried to adapt the source code so that the interfaces remain the same and the query performance corresponds as far as possible to the templated implementation.
+
+According to my measurements at the time of writing, the queries of this version are ~12% slower compared to the implementation with templated dimension and I do not believe it can be made faster.
+This performance price is to be paid for the dynamic dimension. The resulting version (query time) is still significantly faster than boost:geometry::index::rtree.
+
+The mentioned slight loss of performance prevents this forked version from being played back into the original implementation. If the dimension is known in advance, I would still recommend the implementation https://github.com/nushoin/RTree.
 
 ## Usage
 
@@ -13,19 +18,26 @@ The code it now generally compatible with the STL and Boost C++ libraries.
 
 // ...
 
-RTree<Foo*, double, 3> tree;
+DynDimRTree::RTree<Foo*, double> tree(3);
 double min[3] = {0., 0., 0.};
 double max[3] = {1., 1., 1.};
 Foo* bar = new Foo();
 tree.Insert(min, max, bar);
 ```
 
-Provides search in and iteration over the tree. For examples see
-[Test.cpp](https://github.com/nushoin/RTree/blob/master/Test.cpp)
+Provides search in and iteration over the 3d rtree. For examples see
+[Test.cpp](https://github.com/Sergey-Grosman/DynDimRTree/blob/master/Test.cpp)
 
-## Testing
-
-Run `make` to build and `make test` to run the tests. The RTree itself is
+## Build
+Use your favorite IDE or the following commands
+```shell script
+mkdir bin
+cd bin
+cmake ../
+cmake --build .
+```
+Afterwards you can run `test0`, `test1` and `test2`.<br>
+The RTree itself is
 a single header file and can be included without compiling.
 
 ## Authors
@@ -36,49 +48,17 @@ a single header file and can be included without compiling.
 - 2004 Templated C++ port by Greg Douglas
 - 2011 Modified the container to support more data types, by Yariv Barkan
 - 2017 Modified Search to take C++11 function to allow lambdas and added const qualifier, by Gero Mueller
+- 2020 Provided the possibility to set the dimension at run time, by Sergey Grosman
 
 ## License
 
-Original code was taken from http://www.superliminal.com/sources/sources.htm 
+Original code was taken from https://github.com/nushoin/RTree 
 and is stored as git revision 0. This revision is entirely free for all
 uses. Enjoy!
 
-Due to restrictions on public domain in certain jurisdictions, code
-contributed by Yariv Barkan is released in these jurisdictions under the
-BSD, MIT or the GPL - you may choose one or more, whichever that suits you
-best. 
+We are also happy to inherit the license settings.
     
 In jurisdictions where public domain property is recognized, the user of
 this software may choose to accept it either 1) as public domain, 2) under
 the conditions of the BSD, MIT or GPL or 3) any combination of public
 domain and one or more of these licenses.
-
-Thanks [Baptiste Lepilleur](http://jsoncpp.sourceforge.net/LICENSE) for the
-licensing idea.
-
-## Recent Change Log
-
-### 31 Jan 2018
-
-- Added copy constructor
-- Callback function is now `std::function`
-
-### 05 Apr 2014
-
-- Added tests
-
-### 02 Sep 2011
-
-- Modified the container to support more data types. The code it now generally
-  compatible with the STL and Boost C++ libraries.
-
-### 05 Jan 2010
-
-- Fixed Iterator GetFirst() - Previous fix was not incomplete
-
-### 03 Dec 2009
-
-- Added Iteartor GetBounds()
-- Added Iterator usage to simple test
-- Fixed Iterator GetFirst() - Thanks Mathew Riek
-- Minor updates for MSVC 2005/08 compilers

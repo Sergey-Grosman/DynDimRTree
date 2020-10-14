@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cstdio>
 #include <memory.h>
 #ifdef WIN32
   #include <crtdbg.h>
@@ -129,7 +129,7 @@ int main(int /*argc*/, char** /*argv*/)
   const float FRAC_WORLDSIZE = MAX_WORLDSIZE / 2;
 
   // typedef the RTree useage just for conveniance with iteration
-  typedef RTree<SomeThing*, float, 3> SomeThingTree;
+  typedef DynDimRTree::RTree<SomeThing*, float> SomeThingTree;
 
   ASSERT( NUM_OBJECTS > FRAC_OBJECTS );
 
@@ -141,7 +141,7 @@ int main(int /*argc*/, char** /*argv*/)
 
   // Create intance of RTree
 
-  SomeThingTree tree; 
+  SomeThingTree tree(3);
 
   
   // Add some nodes
