@@ -7,7 +7,7 @@ The aim of this project is to allow the dimension to be specified at runtime and
 I tried to adapt the source code so that the interfaces remain the same and the query performance corresponds as far as possible to the templated implementation.
 
 According to my measurements at the time of writing, the queries of this version are ~12% slower compared to the implementation with templated dimension and I do not believe it can be made faster.
-This performance price is to be paid for the dynamic dimension. The resulting version (query time) is still significantly faster than boost:geometry::index::rtree.
+This performance price is to be paid for the dynamic dimension. The resulting version is still significantly faster than boost:geometry::index::rtree (w.r.t. the query time).
 
 The mentioned slight loss of performance prevents this forked version from being played back into the original implementation. If the dimension is known in advance, I would still recommend the implementation https://github.com/nushoin/RTree.
 
