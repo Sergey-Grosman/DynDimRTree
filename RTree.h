@@ -31,14 +31,14 @@ namespace DynDimRTree {
 // Fwd decl
     class RTFileStream;  // File I/O helper class, look below for implementation and notes.
 
-    double unit_sphere_volume(unsigned int dim) {
-        const unsigned int k = dim / 2;
+    double unit_sphere_volume(size_t dim) {
+        const size_t k = dim / 2;
         double res = 1;
         if (dim % 2 == 0) {
-            for (unsigned int i = 1; i <= k; i++) res *= M_PI/i;
+            for (size_t i = 1; i <= k; i++) res *= M_PI/i;
         } else {
             res = 2;
-            for (unsigned int i = 1; i <= k; i++) res *= 2*M_PI/(2*i+1);
+            for (size_t i = 1; i <= k; i++) res *= 2*M_PI/(2*i+1);
         }
         return res;
     }
@@ -81,7 +81,7 @@ namespace DynDimRTree {
 
     public:
 
-        explicit RTree(unsigned int);
+        explicit RTree(size_t);
 
         RTree(const RTree &other);
 
@@ -185,7 +185,7 @@ namespace DynDimRTree {
         private:
 
             /// Reset iterator
-            void Init(const unsigned int dim) { m_tos = 0; dim_ = dim;}
+            void Init(const size_t dim) { m_tos = 0; dim_ = dim;}
 
             /// Find the next data element in the tree (For internal use only)
             bool FindNextData() {
@@ -238,7 +238,7 @@ namespace DynDimRTree {
 
             StackElement m_stack[MAX_STACK];              ///< Stack as we are doing iteration instead of recursion
             int m_tos{};                                  ///< Top Of Stack index
-            unsigned int dim_;                            ///< Dimensionality
+            size_t dim_;                            ///< Dimensionality
 
             friend class RTree; // Allow hiding of non-public functions while allowing manipulation by logical owner
         };
@@ -274,7 +274,7 @@ namespace DynDimRTree {
         /// Minimal bounding rectangle (n-dimensional)
         struct Rect {
             explicit Rect() : m_min(nullptr), m_max(nullptr), dim_(0) {};
-            explicit Rect(const unsigned int dim) : m_min(new ELEMTYPE[dim]), m_max(new ELEMTYPE[dim]), dim_(dim) {};
+            explicit Rect(const size_t dim) : m_min(new ELEMTYPE[dim]), m_max(new ELEMTYPE[dim]), dim_(dim) {};
             Rect(const Rect & rect) : m_min(new ELEMTYPE[rect.dim_]), m_max(new ELEMTYPE[rect.dim_]), dim_(rect.dim_) {
                 memcpy(m_min,rect.m_min,dim_*sizeof(ELEMTYPE));
                 memcpy(m_max,rect.m_max,dim_*sizeof(ELEMTYPE));
@@ -294,7 +294,7 @@ namespace DynDimRTree {
             }
             ELEMTYPE * m_min;
             ELEMTYPE * m_max;
-            unsigned int dim_;
+            size_t dim_;
         };
 
         struct RectRef {
@@ -417,7 +417,7 @@ namespace DynDimRTree {
 
         Node *m_root;                                    ///< Root of tree
         ELEMTYPEREAL m_unitSphereVolume;                 ///< Unit sphere constant for required number of dimensions
-        const unsigned int dim_;                         ///< Dimensionality of tree
+        const size_t dim_;                         ///< Dimensionality of tree
     };
 
 
@@ -488,7 +488,7 @@ namespace DynDimRTree {
 
 
     RTREE_TEMPLATE
-    RTREE_QUAL::RTree(unsigned int dim) : dim_(dim) {
+    RTREE_QUAL::RTree(size_t dim) : dim_(dim) {
                 ASSERT(MAXNODES > MINNODES);
                 ASSERT(MINNODES > 0);
 

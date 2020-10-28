@@ -65,7 +65,7 @@ int main( int argc, char* argv[] )
   typedef DynDimRTree::RTree<ValueType, CoordType, float> MyTree;
   MyTree tree(2);
 
-  unsigned int i, nhits;
+  size_t i, nhits;
   cout << "number of rectangles is " << rectVector.size() << "\n";
 
   for(i=0; i<rectVector.size(); i++)
