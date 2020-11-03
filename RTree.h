@@ -289,8 +289,8 @@ namespace DynDimRTree {
                 return *this;
             };
             ~Rect() {
-                if (m_min) delete[] m_min; m_min = nullptr;
-                if (m_max) delete[] m_max; m_max = nullptr;
+                if (m_min) { delete[] m_min; m_min = nullptr; }
+                if (m_max) { delete[] m_max; m_max = nullptr; }
             }
             ELEMTYPE * m_min;
             ELEMTYPE * m_max;
@@ -1117,7 +1117,7 @@ namespace DynDimRTree {
 
         Rect newRect(dim_);
 
-        for (int index = 0; index < dim_; ++index) {
+        for (size_t index = 0; index < dim_; ++index) {
             newRect.m_min[index] = Min(a_rectA->m_min[index], a_rectB->m_min[index]);
             newRect.m_max[index] = Max(a_rectA->m_max[index], a_rectB->m_max[index]);
         }
@@ -1183,7 +1183,7 @@ namespace DynDimRTree {
         auto sumOfSquares = (ELEMTYPEREAL) 0;
         ELEMTYPEREAL radius;
 
-        for (int index = 0; index < dim_; ++index) {
+        for (size_t index = 0; index < dim_; ++index) {
             ELEMTYPEREAL halfExtent =
                     ((ELEMTYPEREAL) a_rect->m_max[index] - (ELEMTYPEREAL) a_rect->m_min[index]) * (ELEMTYPEREAL) 0.5;
             sumOfSquares += halfExtent * halfExtent;
@@ -1489,7 +1489,7 @@ namespace DynDimRTree {
     RTREE_TEMPLATE
     bool RTREE_QUAL::Overlap(const RectRef & a_rectA, const Rect & a_rectB) const {
 
-        for (int index = 0; index < dim_; ++index) {
+        for (size_t index = 0; index < dim_; ++index) {
             if (a_rectA.m_min[index] > a_rectB.m_max[index] ||
                 a_rectB.m_min[index] > a_rectA.m_max[index]) {
                 return false;
